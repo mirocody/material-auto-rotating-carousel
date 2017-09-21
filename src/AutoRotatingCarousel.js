@@ -14,14 +14,14 @@ const desktopStyles = {
     height: 48,
     position: 'absolute',
     top: 'calc((100% - 96px) / 2 + 24px)',
-    left: -96
+    left: -48
   },
   arrowRight: {
     width: 48,
     height: 48,
     position: 'absolute',
     top: 'calc((100% - 96px) / 2 + 24px)',
-    right: -96
+    right: -48
   },
   carouselWrapper: {
     overflow: 'hidden',
