@@ -153,11 +153,7 @@ export default class AutoRotatingCarousel extends Component {
   render () {
     const style = this.props.mobile ? mobileStyles : desktopStyles
     const landscape = this.props.mobile && this.props.landscape
-    // const { arrowLeft, arrowRight, carouselWrapper, arrowIconButton, arrowIcon, root, content, dots, footer, slide, carousel,
-    //   carouselContainer, dotsLandscape, footerLandscape } = this.props.inlineStyle;
-    // console.log('Carousel!');
-    console.log({...style.dots, ...this.props.dots});
-    console.log(style.dots);
+
     return (
       <div
         style={{
