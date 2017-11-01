@@ -14,14 +14,14 @@ const desktopStyles = {
     height: 48,
     position: 'absolute',
     top: 'calc((100% - 96px) / 2 + 24px)',
-    left: -48
+    left: -96
   },
   arrowRight: {
     width: 48,
     height: 48,
     position: 'absolute',
     top: 'calc((100% - 96px) / 2 + 24px)',
-    right: -48
+    right: -96
   },
   carouselWrapper: {
     overflow: 'hidden',
@@ -121,7 +121,6 @@ export default class AutoRotatingCarousel extends Component {
     this.state = {
       slideIndex: 0
     }
-
   }
 
   handleChange = (slideIndex) => {
