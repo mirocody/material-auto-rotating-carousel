@@ -178,8 +178,6 @@ export default class AutoRotatingCarousel extends Component {
               slideStyle={{...style.slide, ...this.props.slide}}
             >
               {this.props.children.map((c, i) => React.cloneElement(c, {
-                mobile: this.props.mobile,
-                landscape: this.props.landscape,
                 key: i
               }))}
             </Carousel>
