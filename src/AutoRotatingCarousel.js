@@ -167,23 +167,25 @@ export default class AutoRotatingCarousel extends Component {
           onClick={evt => evt.stopPropagation() || evt.preventDefault()}>
           <Paper
             zDepth={this.props.mobile ? 0 : 1}
-            style={{...style.carouselWrapper, ...this.props.carouselWrapper}}>
+            style={{...style.carouselWrapper, ...this.props.carouselWrapperStyle}}>
             <Carousel
               autoplay={this.props.open && this.props.autoplay}
               interval={this.props.interval}
               index={this.state.slideIndex}
               onChangeIndex={this.handleChange}
-              style={{...style.carousel, ...this.props.carousel}}
-              containerStyle={{...style.carouselContainer, ...this.props.carouselContainer}}
-              slideStyle={{...style.slide, ...this.props.slide}}
+              style={{...style.carousel, ...this.props.carouselStyle}}
+              containerStyle={{...style.carouselContainer, ...this.props.carouselContainerStyle}}
+              slideStyle={style.slide}
             >
               {this.props.children.map((c, i) => React.cloneElement(c, {
+                mobile: this.props.mobile,
+                landscape: this.props.landscape,
                 key: i
               }))}
             </Carousel>
           </Paper>
           <div style={landscape ? {minWidth: 300, maxWidth: 'calc(50% - 48px)', padding: 24, float: 'right'} : null}>
-            <div style={landscape ? {...style.footerLandscape, ...this.props.footerLandscape} : {...style.footer, ...this.props.footer}}>
+            <div style={landscape ? { ...style.footerLandscape, ...this.props.footerStyle } : { ...style.footer, ...this.props.footerStyle }}>
               {this.props.label && <RaisedButton
                 label={this.props.label}
                 onClick={this.props.onStart}
@@ -191,19 +193,19 @@ export default class AutoRotatingCarousel extends Component {
               <Dots
                 count={this.props.children.length}
                 index={modulo(this.state.slideIndex, this.props.children.length)}
-                style={landscape ? {...style.dotsLandscape, ...this.props.dotsLandscape} : {...style.dots, ...this.props.dots}}
+                style={landscape ? { ...style.dotsLandscape, ...this.props.dotsStyle } : { ...style.dots, ...this.props.dotsStyle }}
                 onDotClick={this.handleChange}
               />
             </div>
           </div>
           {!this.props.mobile && !this.props.hideArrows ? <div>
             <Paper
-              style={{...style.arrowLeft, ...this.props.arrowLeft}}
+              style={{...style.arrowLeft, ...this.props.arrowLeftStyle}}
               circle
             >
               <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButton}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIcon}}
+                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
+                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
                 onClick={() => this.decreaseIndex()}
                 touch
               >
@@ -211,12 +213,12 @@ export default class AutoRotatingCarousel extends Component {
               </IconButton>
             </Paper>
             <Paper
-              style={{...style.arrowRight, ...this.props.arrowRight}}
+              style={{...style.arrowRight, ...this.props.arrowRightStyle}}
               circle
             >
               <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButton}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIcon}}
+                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
+                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
                 onClick={() => this.increaseIndex()}
                 touch
               >
@@ -240,10 +242,28 @@ AutoRotatingCarousel.defaultProps = {
 }
 
 AutoRotatingCarousel.propTypes = {
+  /** Override the inline-styles of the arrow icon. */
+  arrowIcon: PropTypes.object,
+  /** Override the inline-styles of the arrow icon button */
+  arrowIconButtonStyle: PropTypes.object,
+  /** Override the inline-styles of the left arrow. */
+  arrowLeftStyle: PropTypes.object,
+  /** Override the inline-styles of the right arrow. */
+  arrowRightStyle: PropTypes.object,
   /** If `false`, the auto play behavior is disabled. */
   autoplay: PropTypes.bool,
+  /** Override the inline-styles of the carousel container. */
+  carouselContainer: PropTypes.object,
+  /** Override the inline-styles of the carousel. */
+  carouselStyle: PropTypes.object,
+  /** Override the inline-styles of the carousel wrapper. */
+  carouselWrapperStyle: PropTypes.object,
   /** Override the inline-styles of the content container. */
   contentStyle: PropTypes.object,
+  /** Override the inline-styles of the footer dots when not in landscape mode. */
+  dotsStyle: PropTypes.object,
+  /** Override the inline-styles of the footer when not in landscape mode. */
+  footerStyle: PropTypes.object,
   /** Delay between auto play transitions (in ms). */
   interval: PropTypes.number,
   /** Button text. If not supplied, the button will be hidden. */
