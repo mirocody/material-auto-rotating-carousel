@@ -80,41 +80,6 @@ const desktopStyles = {
   }
 }
 
-const mobileStyles = {
-  root: {
-    height: '100%',
-    width: '100%',
-    position: 'fixed',
-    zIndex: 1400,
-    left: 0,
-    top: 0
-  },
-  content: {},
-  dots: {
-    margin: '0 auto'
-  },
-  dotsLandscape: {
-    paddingTop: 20,
-    margin: '0 auto'
-  },
-  footer: {
-    marginTop: -92,
-    width: '100%',
-    position: 'relative',
-    textAlign: 'center'
-  },
-  footerLandscape: {
-    marginTop: -3,
-    transform: 'translateY(-50vh)',
-    textAlign: 'center',
-    display: 'inline-block'
-  },
-  slide: {
-    width: '100%',
-    height: '100vh'
-  }
-}
-
 export default class AutoRotatingCarousel extends Component {
   constructor (props) {
     super(props)
@@ -150,7 +115,7 @@ export default class AutoRotatingCarousel extends Component {
   }
 
   render () {
-    const style = this.props.mobile ? mobileStyles : desktopStyles
+    const style = desktopStyles
     const landscape = this.props.mobile && this.props.landscape
 
     return (
@@ -163,12 +128,16 @@ export default class AutoRotatingCarousel extends Component {
         }}
         onClick={this.props.onRequestClose}
       >
-        <div style={{...style.content, ...this.props.contentStyle}}
+        <div
+					id="contentStyle"
+					style={{...style.content, ...this.props.contentStyle}}
           onClick={evt => evt.stopPropagation() || evt.preventDefault()}>
           <Paper
+						id="carouselWrapperStyle"
             zDepth={this.props.mobile ? 0 : 1}
             style={{...style.carouselWrapper, ...this.props.carouselWrapperStyle}}>
             <Carousel
+							id="carouselContainerStyle"
               autoplay={this.props.open && this.props.autoplay}
               interval={this.props.interval}
               index={this.state.slideIndex}
@@ -183,10 +152,14 @@ export default class AutoRotatingCarousel extends Component {
             </Carousel>
           </Paper>
           <div style={landscape ? {minWidth: 300, maxWidth: 'calc(50% - 48px)', padding: 24, float: 'right'} : null}>
-            <div style={landscape ? { ...style.footerLandscape, ...this.props.footerStyle } : { ...style.footer, ...this.props.footerStyle }}>
-              {this.props.label && <RaisedButton
-                label={this.props.label}
-                onClick={this.props.onStart}
+            <div
+							style={landscape ? { ...style.footerLandscape, ...this.props.footerStyle } : { ...style.footer, ...this.props.footerStyle }}
+							id="footerStyle"
+							>
+              {this.props.label &&
+								<RaisedButton
+	                label={this.props.label}
+	                onClick={this.props.onStart}
               />}
               <Dots
                 count={this.props.children.length}
@@ -196,7 +169,7 @@ export default class AutoRotatingCarousel extends Component {
               />
             </div>
           </div>
-          {!this.props.mobile && !this.props.hideArrows ? <div>
+          {/* {!this.props.mobile && !this.props.hideArrows ? <div>
             <Paper
               style={{...style.arrowLeft, ...this.props.arrowLeftStyle}}
               circle
@@ -224,7 +197,7 @@ export default class AutoRotatingCarousel extends Component {
               </IconButton>
             </Paper>
           </div> : null
-          }
+          } */}
         </div>
       </div>
     )
