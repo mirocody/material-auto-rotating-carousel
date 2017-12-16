@@ -9,34 +9,12 @@ import Carousel from './SwipableCarouselView'
 import { modulo } from './util'
 
 const desktopStyles = {
-  arrowLeft: {
-    width: 48,
-    height: 48,
-    position: 'absolute',
-    top: 'calc((100% - 96px) / 2 + 24px)',
-    left: -96
-  },
-  arrowRight: {
-    width: 48,
-    height: 48,
-    position: 'absolute',
-    top: 'calc((100% - 96px) / 2 + 24px)',
-    right: -96
-  },
   carouselWrapper: {
     overflow: 'hidden',
     borderRadius: 14,
     transform: 'scale(1.0)',
     background: 'transparent',
     height: '100%'
-  },
-  arrowIconButton: {
-    width: 48,
-    height: 48,
-    padding: 4
-  },
-  arrowIcon: {
-    color: grey700
   },
   root: {
     height: '100%',
@@ -45,7 +23,7 @@ const desktopStyles = {
     zIndex: 1400,
     left: 0,
     top: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    // backgroundColor: 'rgba(0,0,0,0.5)',
     transition: 'opacity 400ms cubic-bezier(0.4, 0, 0.2, 1)'
   },
   content: {
@@ -60,7 +38,8 @@ const desktopStyles = {
   },
   dots: {
     paddingTop: 36,
-    margin: '0 auto'
+    margin: '0 auto',
+    dotColor: '#fff'
   },
   footer: {
     marginTop: -72,
@@ -77,41 +56,6 @@ const desktopStyles = {
   },
   carouselContainer: {
     height: '100%'
-  }
-}
-
-const mobileStyles = {
-  root: {
-    height: '100%',
-    width: '100%',
-    position: 'fixed',
-    zIndex: 1400,
-    left: 0,
-    top: 0
-  },
-  content: {},
-  dots: {
-    margin: '0 auto'
-  },
-  dotsLandscape: {
-    paddingTop: 20,
-    margin: '0 auto'
-  },
-  footer: {
-    marginTop: -92,
-    width: '100%',
-    position: 'relative',
-    textAlign: 'center'
-  },
-  footerLandscape: {
-    marginTop: -3,
-    transform: 'translateY(-50vh)',
-    textAlign: 'center',
-    display: 'inline-block'
-  },
-  slide: {
-    width: '100%',
-    height: '100vh'
   }
 }
 
@@ -145,12 +89,12 @@ export default class AutoRotatingCarousel extends Component {
 
   onChange (slideIndex) {
     if (this.props.onChange) {
-      this.props.onChange(modulo(slideIndex, this.props.children.length))
+      this.props.onChange({ index: modulo(slideIndex, this.props.children.length)})
     }
   }
 
   render () {
-    const style = this.props.mobile ? mobileStyles : desktopStyles
+    const style = desktopStyles
     const landscape = this.props.mobile && this.props.landscape
 
     return (
@@ -163,12 +107,16 @@ export default class AutoRotatingCarousel extends Component {
         }}
         onClick={this.props.onRequestClose}
       >
-        <div style={{...style.content, ...this.props.contentStyle}}
+        <div
+					id="contentStyle"
+					style={{...style.content, ...this.props.contentStyle}}
           onClick={evt => evt.stopPropagation() || evt.preventDefault()}>
           <Paper
+						id="carouselWrapperStyle"
             zDepth={this.props.mobile ? 0 : 1}
             style={{...style.carouselWrapper, ...this.props.carouselWrapperStyle}}>
             <Carousel
+							id="carouselContainerStyle"
               autoplay={this.props.open && this.props.autoplay}
               interval={this.props.interval}
               index={this.state.slideIndex}
@@ -183,48 +131,24 @@ export default class AutoRotatingCarousel extends Component {
             </Carousel>
           </Paper>
           <div style={landscape ? {minWidth: 300, maxWidth: 'calc(50% - 48px)', padding: 24, float: 'right'} : null}>
-            <div style={landscape ? { ...style.footerLandscape, ...this.props.footerStyle } : { ...style.footer, ...this.props.footerStyle }}>
-              {this.props.label && <RaisedButton
-                label={this.props.label}
-                onClick={this.props.onStart}
+            <div
+							style={landscape ? { ...style.footerLandscape, ...this.props.footerStyle } : { ...style.footer, ...this.props.footerStyle }}
+							id="footerStyle"
+							>
+              {this.props.label &&
+								<RaisedButton
+	                label={this.props.label}
+	                onClick={this.props.onStart}
               />}
               <Dots
                 count={this.props.children.length}
                 index={modulo(this.state.slideIndex, this.props.children.length)}
                 style={landscape ? { ...style.dotsLandscape, ...this.props.dotsStyle } : { ...style.dots, ...this.props.dotsStyle }}
+                dotColor="#fff"
                 onDotClick={this.handleChange}
               />
             </div>
           </div>
-          {!this.props.mobile && !this.props.hideArrows ? <div>
-            <Paper
-              style={{...style.arrowLeft, ...this.props.arrowLeftStyle}}
-              circle
-            >
-              <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
-                onClick={() => this.decreaseIndex()}
-                touch
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            </Paper>
-            <Paper
-              style={{...style.arrowRight, ...this.props.arrowRightStyle}}
-              circle
-            >
-              <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
-                onClick={() => this.increaseIndex()}
-                touch
-              >
-                <ArrowForwardIcon />
-              </IconButton>
-            </Paper>
-          </div> : null
-          }
         </div>
       </div>
     )
