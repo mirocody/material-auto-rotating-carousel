@@ -71,7 +71,7 @@ export default class AutoRotatingCarousel extends Component {
     this.setState({
       slideIndex
     }, this.onChange(slideIndex))
-  })
+  }
 
   decreaseIndex () {
     const slideIndex = this.state.slideIndex - 1
@@ -149,35 +149,6 @@ export default class AutoRotatingCarousel extends Component {
               />
             </div>
           </div>
-          {/* {!this.props.mobile && !this.props.hideArrows ? <div>
-            <Paper
-              style={{...style.arrowLeft, ...this.props.arrowLeftStyle}}
-              circle
-            >
-              <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
-                onClick={() => this.decreaseIndex()}
-                touch
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            </Paper>
-            <Paper
-              style={{...style.arrowRight, ...this.props.arrowRightStyle}}
-              circle
-            >
-              <IconButton
-                style={{...style.arrowIconButton, ...this.props.arrowIconButtonStyle}}
-                iconStyle={{...style.arrowIcon, ...this.props.arrowIconStyle}}
-                onClick={() => this.increaseIndex()}
-                touch
-              >
-                <ArrowForwardIcon />
-              </IconButton>
-            </Paper>
-          </div> : null
-          } */}
         </div>
       </div>
     )
