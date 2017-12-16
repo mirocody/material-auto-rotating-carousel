@@ -9,34 +9,12 @@ import Carousel from './SwipableCarouselView'
 import { modulo } from './util'
 
 const desktopStyles = {
-  arrowLeft: {
-    width: 48,
-    height: 48,
-    position: 'absolute',
-    top: 'calc((100% - 96px) / 2 + 24px)',
-    left: -96
-  },
-  arrowRight: {
-    width: 48,
-    height: 48,
-    position: 'absolute',
-    top: 'calc((100% - 96px) / 2 + 24px)',
-    right: -96
-  },
   carouselWrapper: {
     overflow: 'hidden',
     borderRadius: 14,
     transform: 'scale(1.0)',
     background: 'transparent',
     height: '100%'
-  },
-  arrowIconButton: {
-    width: 48,
-    height: 48,
-    padding: 4
-  },
-  arrowIcon: {
-    color: grey700
   },
   root: {
     height: '100%',
@@ -45,7 +23,7 @@ const desktopStyles = {
     zIndex: 1400,
     left: 0,
     top: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    // backgroundColor: 'rgba(0,0,0,0.5)',
     transition: 'opacity 400ms cubic-bezier(0.4, 0, 0.2, 1)'
   },
   content: {
@@ -60,7 +38,8 @@ const desktopStyles = {
   },
   dots: {
     paddingTop: 36,
-    margin: '0 auto'
+    margin: '0 auto',
+    dotColor: '#fff'
   },
   footer: {
     marginTop: -72,
@@ -92,7 +71,7 @@ export default class AutoRotatingCarousel extends Component {
     this.setState({
       slideIndex
     }, this.onChange(slideIndex))
-  }
+  })
 
   decreaseIndex () {
     const slideIndex = this.state.slideIndex - 1
@@ -110,7 +89,7 @@ export default class AutoRotatingCarousel extends Component {
 
   onChange (slideIndex) {
     if (this.props.onChange) {
-      this.props.onChange(modulo(slideIndex, this.props.children.length))
+      this.props.onChange({ index: modulo(slideIndex, this.props.children.length)})
     }
   }
 
@@ -165,6 +144,7 @@ export default class AutoRotatingCarousel extends Component {
                 count={this.props.children.length}
                 index={modulo(this.state.slideIndex, this.props.children.length)}
                 style={landscape ? { ...style.dotsLandscape, ...this.props.dotsStyle } : { ...style.dots, ...this.props.dotsStyle }}
+                dotColor="#fff"
                 onDotClick={this.handleChange}
               />
             </div>

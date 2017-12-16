@@ -6,7 +6,6 @@ const styles = {
   desktop: {
     root: {
       color: 'white',
-      backgroundColor: blue500,
       height: '100%'
     },
     media: {
@@ -16,7 +15,7 @@ const styles = {
       alignItems: 'center'
     },
     mediaBackground: {
-      backgroundColor: blue700,
+      backgroundColor: 'none',
       height: '100%',
       textAlign: 'center'
     },
@@ -64,18 +63,16 @@ export default function Slide (props) {
   return (
     <div style={{...style.root, ...contentStyle}}>
       <div style={{...style.mediaBackground, ...mediaBackgroundStyle}}>
-        <div style={{...style.media, ...mediaStyle}}>{React.cloneElement(media, {
-          style: {...media.style, maxHeight: '100%'}
-        })}</div>
-      </div>
-      <div style={{...style.text, ...textStyle}}>
-        <div style={{...style.title, ...titleStyle}}>
-          {title}
+        <div style={{...style.text, ...textStyle}}>
+          <div style={{...style.title, ...titleStyle}}>
+            {title}
+          </div>
+          <p style={{...style.subtitle, ...subtitleStyle}}>
+            {subtitle}
+          </p>
         </div>
-        <p style={{...style.subtitle, ...subtitleStyle}}>
-          {subtitle}
-        </p>
       </div>
+
     </div>
   )
 }
